@@ -11,18 +11,14 @@ public class Employee {
     public static String addEmployeeRequestBody;
 
     public static Response addEmployee(String adminToken) {
-
-        addEmployeeRequestBody =generateEmployeeData();
-        System.out.println(addEmployeeRequestBody);
-
-        return given().
+     addEmployeeRequestBody =generateEmployeeData();
+       return given().
                 contentType(ContentType.JSON)
                 .header("Authorization", "Bearer " + adminToken)
                 .body(addEmployeeRequestBody)
                 .when().post(BASE_URL + "/employees");
 
-
-    }
+   }
     private static final Faker faker = new Faker();
     public static String generateEmployeeData() {
         return String.format(
