@@ -41,8 +41,6 @@ public class EmployeeTest {
                 .header("Authorization", "Bearer " + adminToken)
                 .body(employeeRequestBody)
                 .when().post(BASE_URL + "/employees");
-        System.out.println(employeeRequestBody  );
-
         assertEquals(400, response.getStatusCode(), "Employee creation succeeded," +
                 "but it should fail due to duplicate email.");
     }
@@ -51,11 +49,8 @@ public class EmployeeTest {
     @Order(3)
     public void updateEmployee() {
         Response response = UpdateEmployee.updateEmployee(adminToken, employeeId);
-        System.out.println(response.getBody().prettyPrint());
         assertEquals(200, response.getStatusCode(), "Employee creation succeeded");
         employeeRequestBody = Employee.generateEmployeeData();
-
-
     }
 
     @Test
@@ -65,9 +60,6 @@ public class EmployeeTest {
                 contentType(ContentType.JSON)
                 .header("Authorization", "Bearer " + adminToken)
                 .when().get(BASE_URL + "/employees/" + employeeId);
-        System.out.println(employeeId );
-
-        System.out.println(response.getBody().prettyPrint());
         assertEquals(200, response.getStatusCode(), "The employee was not found");
     }
     @Test
@@ -81,7 +73,6 @@ public class EmployeeTest {
 
         assertEquals(401, response.getStatusCode(),
                 "Expected 401 Unauthorized, but got " + response.getStatusCode());
-
         assertEquals("Unauthorized", response.jsonPath().getString("message"),
                     "Actual message is: " + response.jsonPath().getString("message"));
         }
@@ -99,7 +90,6 @@ public class EmployeeTest {
 
         assertEquals(401, response.getStatusCode(),
                 "Expected 401 Unauthorized, but got " + response.getStatusCode());
-
         assertEquals("Unauthorized", response.jsonPath().getString("message"),
                 "Expected message is  Unauthorized, but got " + response.jsonPath().getString("message"));
 
