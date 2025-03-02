@@ -18,18 +18,13 @@ public class GettingAdminToken {
         if (adminToken == null || isAdminTokenExpired()) {
             adminToken = generateAdminToken();
         }
-
         return adminToken;
     }
-
-    private static String generateAdminToken() {
-
-        Response response = Login.adminLogin( username,password );
-
-        adminToken = response.jsonPath().getString("token");
-        String tokenExpirationDate = response.jsonPath().getString("accountExpirationDate");
-        tokenExpirationTime = Instant.parse(tokenExpirationDate);
-        System.out.println("Generate admin token worked : " + adminToken);
+   private static String generateAdminToken() {
+   Response response = Login.adminLogin( username,password );
+   adminToken = response.jsonPath().getString("token");
+   String tokenExpirationDate = response.jsonPath().getString("accountExpirationDate");
+  tokenExpirationTime = Instant.parse(tokenExpirationDate);
        return adminToken;
     }
 
@@ -39,7 +34,6 @@ public class GettingAdminToken {
             return true;
         }
         Instant now = Instant.now();
-        System.out.println("token Expiration time: " + tokenExpirationTime);
         return now.isAfter(tokenExpirationTime);
     }
 
